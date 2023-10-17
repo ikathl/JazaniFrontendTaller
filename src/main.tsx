@@ -1,10 +1,16 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
+import '@popperjs/core';
+import 'bootstrap';
+
+import './core/styles/app.scss';
+
+import router from './core/router';
+import { RouterProvider } from 'react-router-dom';
+
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+	<React.StrictMode>
+		<RouterProvider router={router} />
+	</React.StrictMode>,
+);
