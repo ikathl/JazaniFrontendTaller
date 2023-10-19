@@ -1,8 +1,11 @@
 import { createBrowserRouter, type RouteObject } from 'react-router-dom';
-import Admin from '../layouts/Admin';
-import Home from '../../home';
-import InvestmentConceptSearch from '../../mcs/InvestmentConcept/views/searchs';
-// import MineralSearch from '../../generals/minerals/views/searchs';
+import Admin from '@/core/layouts/Admin';
+import Home from '@/home';
+import InvestmentConceptSearch from '@/mcs/InvestmentConcept/views/searchs';
+
+// Auth
+import Auth from '@/core/layouts/Auth';
+import Login from '@/auth/login/views';
 
 const routes: RouteObject[] = [
 	{
@@ -14,14 +17,19 @@ const routes: RouteObject[] = [
 				element: <Home />,
 			},
 			{
-				path: '/investent-concept',
+				path: '/investment-concept',
 				element: <InvestmentConceptSearch />,
 			},
-			// ,
-			// {
-			// 	path: '/minerals',
-			// 	element: <MineralSearch />,
-			// },
+		],
+	},
+	{
+		path: '/login',
+		element: <Auth />,
+		children: [
+			{
+				index: true,
+				element: <Login />,
+			},
 		],
 	},
 ];
