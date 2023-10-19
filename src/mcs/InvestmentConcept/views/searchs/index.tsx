@@ -9,18 +9,15 @@ import Badge from 'react-bootstrap/Badge';
 import { Card } from 'react-bootstrap';
 
 const index = (): JSX.Element => {
-	// eslint-disable-next-line react-hooks/rules-of-hooks
-	const [mineralTypes, mineralTypesSet] = useState<InvestmentConceptResponse[]>([]);
-
-	// eslint-disable-next-line react-hooks/rules-of-hooks
+	const [investmentconcept, investmentConceptSet] = useState<InvestmentConceptResponse[]>([]);
 	useEffect(() => {
-		void loadMineralTypes();
+		void loadinvestmentconcept();
 	}, []);
 
-	const loadMineralTypes = async (): Promise<void> => {
+	const loadinvestmentconcept = async (): Promise<void> => {
 		const response = await InvestmentConceptRepository.findAll();
 
-		mineralTypesSet(response.data);
+		investmentConceptSet(response);
 		console.log('response: ', response);
 	};
 
@@ -41,15 +38,15 @@ const index = (): JSX.Element => {
 									</tr>
 								</thead>
 								<tbody>
-									{mineralTypes.length > 0 &&
-										mineralTypes.map(mineralType => (
-											<tr key={mineralType.id}>
-												<td>{mineralType.id}</td>
-												<td>{mineralType.name}</td>
-												<td>{mineralType.description}</td>
+									{investmentconcept.length > 0 &&
+										investmentconcept.map(investment => (
+											<tr key={investment.id}>
+												<td>{investment.id}</td>
+												<td>{investment.name}</td>
+												<td>{investment.description}</td>
 												<td>
-													<Badge pill bg={mineralType.state ? 'success' : 'danger'}>
-														{mineralType.state ? 'Activo' : 'Elminado'}
+													<Badge pill bg={investment.state ? 'success' : 'danger'}>
+														{investment.state ? 'Activo' : 'Elminado'}
 													</Badge>
 												</td>
 											</tr>

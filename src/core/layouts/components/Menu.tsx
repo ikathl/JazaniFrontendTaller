@@ -14,8 +14,8 @@ const Menu: FC = () => {
 				<Navbar.Collapse id="basic-navbar-nav">
 					<Nav className="me-auto">
 						<Nav.Link href="/">Home</Nav.Link>
-						<NavDropdown title="General" id="basic-nav-dropdown">
-							<Link className="dropdown-item" to="investent-concept">
+						<NavDropdown title="MC" id="basic-nav-dropdown">
+							<Link className="dropdown-item" to="investment-concept">
 								Investment Concept List
 							</Link>
 							<NavDropdown.Divider />
