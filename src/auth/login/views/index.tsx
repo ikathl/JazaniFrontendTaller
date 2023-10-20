@@ -40,7 +40,7 @@ const index = (): JSX.Element => {
 		const response: UserSecurityResponse = await mutateAsync(payload);
 
 		LocalStorageSession.saveAuthorization(response);
-		console.log('Comparar redicrecionamiento');
+		console.log('Comparar redicrecionamiento(si se usó)');
 		navigate('/');
 	};
 
