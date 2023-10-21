@@ -6,11 +6,20 @@ import { InvestmentRepository } from '../../infraestructure';
 
 export const usePaginateSearchInvestment = (
 	searchFilter: RequestPagination<InvestmentFilter>,
-): UseQueryResult<ResponsePagination<InvestmentResponse>, Error> => {
+): DefinedUseQueryResult<ResponsePagination<InvestmentResponse>, Error> => {
 	return useQuery({
 		queryKey: [PAGINATE_SEARCH, searchFilter],
 		queryFn: async () => await InvestmentRepository.paginatedSearch(searchFilter),
 		retry: 0,
 		refetchOnWindowFocus: false,
+		initialData: {
+			from: 0,
+			to: 0,
+			perPage: 0,
+			currentPage: 0,
+			lastPage: 0,
+			total: 0,
+			data: [],
+		},
 	});
 };
