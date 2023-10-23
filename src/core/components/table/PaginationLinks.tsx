@@ -1,6 +1,7 @@
 import { type FilterPage, type ResponsePagination } from '@/shared/domain';
-import { useEffect, type JSX, useState } from 'react';
-import { FormSelect, Pagination } from 'react-bootstrap';
+import { useState, type JSX, useEffect } from 'react';
+import Pagination from 'react-bootstrap/Pagination';
+import FormSelect from 'react-bootstrap/FormSelect';
 
 interface PaginationLinksProps<T> {
 	data: ResponsePagination<T>;
@@ -8,7 +9,7 @@ interface PaginationLinksProps<T> {
 }
 
 const PaginationLinks = <T,>({ data, goToPage }: PaginationLinksProps<T>): JSX.Element => {
-	// atributos
+	// Attributes
 	const perPageItems: number[] = [5, 10, 20, 30, 40, 50, 100];
 	const paginationItemsLimit: number = 5;
 
@@ -21,7 +22,7 @@ const PaginationLinks = <T,>({ data, goToPage }: PaginationLinksProps<T>): JSX.E
 	const [separatorAtEnd, setSeparatoAtEnd] = useState<boolean>(false);
 	const [separatorAtAround, setSeparatoAtAround] = useState<boolean>(false);
 
-	// hooks
+	// Hooks
 	useEffect(() => {
 		setPaginationItems(Array.from({ length: paginationItemsLimit }, (x, i) => i));
 	}, []);
@@ -47,7 +48,7 @@ const PaginationLinks = <T,>({ data, goToPage }: PaginationLinksProps<T>): JSX.E
 		if (data?.lastPage != null) setIsPosibleShowAll(data.lastPage <= paginationItemsLimit);
 	}, [data?.lastPage]);
 
-	// methods
+	// Methods
 	const isCurrentPage = (current: number | undefined): boolean => current === currentPage;
 
 	const PaginationItems = (): JSX.Element => {

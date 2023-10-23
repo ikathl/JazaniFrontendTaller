@@ -1,7 +1,7 @@
-import { type FilterPage, type ResponsePagination } from '@/shared/domain';
-import { useReactTable, type ColumnDef, getCoreRowModel, flexRender } from '@tanstack/react-table';
+import { type ResponsePagination, type FilterPage } from '@/shared/domain';
+import { getCoreRowModel, useReactTable, type ColumnDef, flexRender } from '@tanstack/react-table';
+import Table from 'react-bootstrap/Table';
 import { type JSX } from 'react';
-import { Table } from 'react-bootstrap';
 import PaginationLinks from './PaginationLinks';
 
 interface TablePaginatedProps<T> {
