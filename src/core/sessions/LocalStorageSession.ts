@@ -9,7 +9,7 @@ export const saveAuthorization = (payload: UserSecurityResponse): void => {
 export const getAuthorization = (): UserSecurityResponse => {
 	const data = localStorage.getItem(STORAGE_OF_AUTHORIZATION);
 
-	if (data == null) throw new Error('Required Login');
+	if (data == null) throw new Error('Login Required');
 
 	return JSON.parse(data);
 };

@@ -11,8 +11,12 @@ import { type LoginRequest, type UserSecurityResponse } from '@/auth/login/domai
 import useLogin from '@/auth/login/application/hooks/useLogin';
 import { LocalStorageSession } from '@/core/sessions';
 
+import { useNavigate } from 'react-router-dom';
+
 const index = (): JSX.Element => {
 	// Attributes
+	const navigate = useNavigate();
+
 	const formik = useFormik<LoginRequest>({
 		initialValues: {
 			email: '',
@@ -35,9 +39,9 @@ const index = (): JSX.Element => {
 	const loginAuth = async (payload: LoginRequest): Promise<void> => {
 		const response: UserSecurityResponse = await mutateAsync(payload);
 
-		console.log('Logi: ', response);
-
 		LocalStorageSession.saveAuthorization(response);
+		console.log('Comparar redicrecionamiento(si se usó)');
+		navigate('/');
 	};
 
 	return (
