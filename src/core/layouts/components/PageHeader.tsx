@@ -7,6 +7,7 @@ import avatar2 from '@/core/templates/img/avatars/avatar-2.jpg';
 import avatar from '@/core/templates/img/avatars/avatar.jpg';
 import { useNavigate } from 'react-router';
 import { LocalStorageSession } from '@/core/sessions';
+import { left } from '@popperjs/core';
 
 const PageHeader = (): JSX.Element => {
 	const navigate = useNavigate();

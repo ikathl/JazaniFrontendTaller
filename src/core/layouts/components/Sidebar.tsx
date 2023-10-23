@@ -13,16 +13,16 @@ const Sidebar = (): JSX.Element => {
 					<li className="sidebar-header">General</li>
 
 					<li className="sidebar-item">
-						<Link className="sidebar-link" to="mineral-types">
+						<Link className="sidebar-link" to="investment">
 							<i className="align-middle" data-feather="sliders"></i>{' '}
-							<span className="align-middle">Tipo de minerales</span>
+							<span className="align-middle">Investment</span>
 						</Link>
 					</li>
 
 					<li className="sidebar-item">
-						<Link className="sidebar-link" to="minerals">
+						<Link className="sidebar-link" to="investment-concept">
 							<i className="align-middle" data-feather="user"></i>{' '}
-							<span className="align-middle">Minerales</span>
+							<span className="align-middle">Investment Concept</span>
 						</Link>
 					</li>
 
