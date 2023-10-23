@@ -5,6 +5,8 @@ import { PrivateOutlet, PublicOutlet } from '@/core/router/CheckPageNavigator';
 import Admin from '@/core/layouts/Admin';
 import Home from '@/home';
 import InvestmentConceptSearch from '@/mcs/InvestmentConcept/views/searchs';
+import InvestmentConceptCreate from '@/mcs/InvestmentConcept/views/create';
+import InvestmentConceptEdit from '@/mcs/InvestmentConcept/views/edit';
 import InvestmentSearch from '@/mcs/Investment/views/searchs';
 // Auth
 import Auth from '@/core/layouts/Auth';
@@ -26,6 +28,14 @@ const routes: RouteObject[] = [
 			{
 				path: '/investment-concept',
 				element: <InvestmentConceptSearch />,
+			},
+			{
+				path: '/investment-concept/create',
+				element: <InvestmentConceptCreate />,
+			},
+			{
+				path: '/investment-concept/edit/:id',
+				element: <InvestmentConceptEdit />,
 			},
 			{
 				path: '/investment',
