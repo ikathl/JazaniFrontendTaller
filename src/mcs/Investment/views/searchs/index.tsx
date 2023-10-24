@@ -6,11 +6,13 @@ import Badge from 'react-bootstrap/Badge';
 import { Card } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { useFormik } from 'formik';
 import { type FilterPage, type RequestPagination } from '@/shared/domain';
 import usePaginatedSearchInvestment from '../../application/hooks/usePaginateSearchInvestment';
 import { createColumnHelper } from '@tanstack/react-table';
 import TablePaginated from '@/core/components/table/TablePaginated';
+import { Link } from 'react-router-dom';
 
 const index = (): JSX.Element => {
 	// const [Investment, InvestmentSet] = useState<InvestmentResponse[]>([]);
@@ -167,7 +169,17 @@ const index = (): JSX.Element => {
 
 	return (
 		<>
-			<Row className="pt-2">
+			<Breadcrumb>
+				<Breadcrumb.Item>General</Breadcrumb.Item>
+				<Breadcrumb.Item active>Tipo de Minerales</Breadcrumb.Item>
+				<li className="breadcrumb-item breadcrumb-action ms-auto">
+					<Link className="btn btn-success" to="/mineral-types/create">
+						Nuevo
+					</Link>
+				</li>
+			</Breadcrumb>
+
+			<Row>
 				<Col xs={12}>
 					<Card>
 						<Card.Header>Busqueda</Card.Header>
