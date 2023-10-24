@@ -13,6 +13,8 @@ import usePaginatedSearchInvestment from '../../application/hooks/usePaginateSea
 import { createColumnHelper } from '@tanstack/react-table';
 import TablePaginated from '@/core/components/table/TablePaginated';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import useRemoveInvestment from '../../application/hooks/useRemoveInvestment';
 
 const index = (): JSX.Element => {
 	// const [Investment, InvestmentSet] = useState<InvestmentResponse[]>([]);
@@ -26,31 +28,10 @@ const index = (): JSX.Element => {
 		initialValues: {
 			amountInvested: 0,
 			description: '',
-			monthName: '',
 			accreditationCode: '',
-			id: 0,
-			year: 0,
-			miningConcessionId: 0,
-			investmentTypeId: 0,
-			currencyTypeId: 0,
-			periodTypeId: 0,
-			measureUnitId: 0,
-			registrationDate: '',
-			state: false,
-			monthId: 0,
-			accountantCode: '',
-			holderId: 0,
-			declaredTypeId: 0,
-			documentId: 0,
-			investmentConceptId: 0,
-			module: false,
-			frecuency: 0,
-			isDAC: 0,
-			metricTons: '',
-			declarationDate: '',
 		},
 		onSubmit: values => {
-			console.log('data', values);
+			console.log('onsubmit data', values);
 
 			setInvestmentFilter(prev => {
 				return {
@@ -58,54 +39,42 @@ const index = (): JSX.Element => {
 					filter: {
 						amountInvested: values.amountInvested,
 						description: values.description,
-						monthName: values.monthName,
 						accreditationCode: values.accreditationCode,
-						id: values.id,
-						year: values.year,
-						miningConcessionId: values.miningConcessionId,
-						investmentTypeId: values.investmentConceptId,
-						currencyTypeId: values.currencyTypeId,
-						periodTypeId: values.periodTypeId,
-						measureUnitId: values.measureUnitId,
-						registrationDate: values.registrationDate,
-						state: values.state,
-						monthId: values.monthId,
-						accountantCode: values.accountantCode,
-						holderId: values.holderId,
-						declaredTypeId: values.declaredTypeId,
-						documentId: values.documentId,
-						investmentConceptId: values.investmentConceptId,
-						module: values.module,
-						frecuency: values.frecuency,
-						isDAC: values.isDAC,
-						metricTons: values.metricTons,
-						declarationDate: values.declarationDate,
 					},
 				};
 			});
 		},
 	});
-	// React Query
-	// tranformar esta petición a hook usando react query
-
-	// useEffect(() => {
-	// 	void loadInvestment();
-	// }, []);
-
-	// const loadInvestment = async (): Promise<void> => {
-	// 	// const response = await InvestmentRepository.findAll();
-	// 	const response = await InvestmentRepository.paginatedSearch(investmentFilter);
-	// 	InvestmentSet(response.data);
-	// 	console.log('response.filter: ', response);
-	// };
 
 	// react query
 	const { data: investmentPaginated, isFetching } = usePaginatedSearchInvestment(investmentFilter);
+	const { mutateAsync } = useRemoveInvestment();
 
 	// react table
 	const columnHelper = createColumnHelper<InvestmentResponse>();
 
 	const columns = [
+		columnHelper.display({
+			id: 'acciones',
+			header: () => <span className="d-block text-center">Acciones</span>,
+			cell: ({ row }) => (
+				<span className="d-flex align-items-center justify-content-center">
+					<Link className="btn btn-primary btn-sm me-2" to={`/investment/edit/${row.original.id}`}>
+						✎{' '}
+					</Link>
+					<Button
+						type="button"
+						variant="danger"
+						className="me-2 btn-sm"
+						onClick={() => {
+							void removeById(row.original);
+						}}
+					>
+						🗑{' '}
+					</Button>
+				</span>
+			),
+		}),
 		columnHelper.accessor('id', {
 			header: 'ID',
 			cell: info => info.getValue(),
@@ -124,15 +93,15 @@ const index = (): JSX.Element => {
 		}),
 		columnHelper.accessor('holder', {
 			header: 'Holder',
-			cell: info => info.getValue().name,
+			cell: info => (info.getValue() == null ? '' : info.getValue().name),
 		}),
 		columnHelper.accessor('miningConcession', {
 			header: 'Mining Concession',
-			cell: info => info.getValue().name,
+			cell: info => (info.getValue() == null ? '' : info.getValue().name),
 		}),
 		columnHelper.accessor('investmentType', {
 			header: 'Investment Type',
-			cell: info => info.getValue().name,
+			cell: info => (info.getValue() == null ? '' : info.getValue().name),
 		}),
 		columnHelper.accessor('declarationDate', {
 			header: 'Declaration Date',
@@ -150,12 +119,6 @@ const index = (): JSX.Element => {
 		}),
 	];
 
-	// const table = useReactTable<InvestmentResponse>({
-	// 	data: investmentPaginated?.data ?? [],
-	// 	columns,
-	// 	getCoreRowModel: getCoreRowModel(),
-	// });
-
 	// methods
 	const goToPage = (payload: FilterPage): void => {
 		setInvestmentFilter(prev => {
@@ -166,14 +129,29 @@ const index = (): JSX.Element => {
 			};
 		});
 	};
+	const removeById = async (payload: InvestmentResponse): Promise<void> => {
+		const selectedOption = await Swal.fire({
+			title: 'Are you sure?',
+			text: "You won't be able to revert this!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes, delete it!',
+		});
+
+		if (selectedOption.isConfirmed) {
+			await mutateAsync(payload.id);
+		}
+	};
 
 	return (
 		<>
 			<Breadcrumb>
 				<Breadcrumb.Item>General</Breadcrumb.Item>
-				<Breadcrumb.Item active>Tipo de Minerales</Breadcrumb.Item>
+				<Breadcrumb.Item active>Investment</Breadcrumb.Item>
 				<li className="breadcrumb-item breadcrumb-action ms-auto">
-					<Link className="btn btn-success" to="/mineral-types/create">
+					<Link className="btn btn-success" to="/investment/create">
 						Nuevo
 					</Link>
 				</li>
@@ -221,7 +199,14 @@ const index = (): JSX.Element => {
 							</Row>
 						</Card.Body>
 						<Card.Footer className="d-flex justify-content-end">
-							<Button type="button" variant="primary" onClick={() => formik.handleSubmit}>
+							<Button
+								type="button"
+								variant="primary"
+								className="me-2"
+								onClick={() => {
+									formik.handleSubmit();
+								}}
+							>
 								Buscar
 							</Button>
 							{''}
