@@ -53,6 +53,7 @@ export const edit = async (payload: InvestmentRequest, id: number): Promise<Inve
 };
 
 export const remove = async (id: number): Promise<InvestmentResponse> => {
+	console.log('id from delete', id);
 	const response: AxiosResponse<InvestmentResponse> = await axios.delete<InvestmentResponse>(
 		`${API_BASE_URL}/api/Investment/${id}`,
 	);

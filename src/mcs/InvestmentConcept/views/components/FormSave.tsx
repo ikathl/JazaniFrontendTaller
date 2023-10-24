@@ -51,10 +51,10 @@ const FormSave = ({ id, pageTitle, onSave }: FormSaveProps): JSX.Element => {
 		<>
 			<Breadcrumb>
 				<Breadcrumb.Item>General</Breadcrumb.Item>
-				<Breadcrumb.Item>InvestmentConcept</Breadcrumb.Item>
+				<Breadcrumb.Item>Investment Concept</Breadcrumb.Item>
 				<Breadcrumb.Item active>{pageTitle}</Breadcrumb.Item>
 				<li className="breadcrumb-item breadcrumb-action ms-auto">
-					<Link className="btn btn-secondary" to="/mineral-types">
+					<Link className="btn btn-secondary" to="/investment">
 						Atrás
 					</Link>
 				</li>
