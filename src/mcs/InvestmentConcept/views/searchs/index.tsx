@@ -9,6 +9,8 @@ import Col from 'react-bootstrap/Col';
 import Badge from 'react-bootstrap/Badge';
 import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import useRemoveInvestmentConcept from '../../application/hooks/useRemoveInvestmentConcept';
 
 const index = (): JSX.Element => {
 	const [investmentconcept, investmentConceptSet] = useState<InvestmentConceptResponse[]>([]);
@@ -21,6 +23,22 @@ const index = (): JSX.Element => {
 
 		investmentConceptSet(response);
 		console.log('response: ', response);
+	};
+	const { mutateAsync } = useRemoveInvestmentConcept();
+	const removeById = async (payload: InvestmentConceptResponse): Promise<void> => {
+		const selectedOption = await Swal.fire({
+			title: 'Are you sure?',
+			text: "You won't be able to revert this!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes, delete it!',
+		});
+
+		if (selectedOption.isConfirmed) {
+			await mutateAsync(payload.id);
+		}
 	};
 
 	return (

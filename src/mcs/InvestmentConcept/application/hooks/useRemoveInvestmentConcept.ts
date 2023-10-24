@@ -1,26 +1,25 @@
 import { useMutation, type UseMutationResult, useQueryClient } from '@tanstack/react-query';
-import { type InvestmentConceptResponse, type InvestmentConceptRequest } from '../../domain';
+import { type InvestmentConceptResponse } from '../../domain';
 import { InvestmentConceptRepository } from '../../infraestructure';
 import { FIND_BY_ID, PAGINATED_SEARCH } from '../QueryKeys';
 
-const useCreateInvestmentConcept = (): UseMutationResult<
+const useRemoveInvestmentConcept = (): UseMutationResult<
 	InvestmentConceptResponse,
 	Error,
-	InvestmentConceptRequest
+	number
 > => {
 	const queryClient = useQueryClient();
 
 	return useMutation({
-		mutationFn: async (payload: InvestmentConceptRequest) =>
-			await InvestmentConceptRepository.create(payload),
+		mutationFn: async (id: number) => await InvestmentConceptRepository.remove(id),
 		onError: error => {
 			console.error('Error', error);
 		},
 		onSuccess: () => {
-			void queryClient.invalidateQueries({ queryKey: [FIND_BY_ID] });
 			void queryClient.invalidateQueries({ queryKey: [PAGINATED_SEARCH] });
+			void queryClient.invalidateQueries({ queryKey: [FIND_BY_ID] });
 		},
 	});
 };
 
-export default useCreateInvestmentConcept;
+export default useRemoveInvestmentConcept;

@@ -8,6 +8,8 @@ import InvestmentConceptSearch from '@/mcs/InvestmentConcept/views/searchs';
 import InvestmentConceptCreate from '@/mcs/InvestmentConcept/views/create';
 import InvestmentConceptEdit from '@/mcs/InvestmentConcept/views/edit';
 import InvestmentSearch from '@/mcs/Investment/views/searchs';
+import InvestmentCreate from '@/mcs/Investment/views/create';
+import InvestmentEdit from '@/mcs/Investment/views/edit';
 // Auth
 import Auth from '@/core/layouts/Auth';
 import Login from '@/auth/login/views';
@@ -40,6 +42,14 @@ const routes: RouteObject[] = [
 			{
 				path: '/investment',
 				element: <InvestmentSearch />,
+			},
+			{
+				path: '/investment/create',
+				element: <InvestmentCreate />,
+			},
+			{
+				path: '/investment/edit/:id',
+				element: <InvestmentEdit />,
 			},
 		],
 	},
